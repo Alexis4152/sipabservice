@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" 
+xmlns:tlc="http://amx.com/mexico/telcel/esb/v1_2" 
+xmlns:tns="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice">
+     <xs:import namespace="http://amx.com/mexico/telcel/esb/v1_2" schemaLocation="americamovil_telcel_v1_2.xsd"/>
+     <!--  SIMPLE TYPES  -->
+     <xs:simpleType name="CadenaAlfanumerica10Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 10 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="10"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="Decimal10Type">
+          <xs:annotation>
+               <xs:documentation>Tipo de Dato Decimal de 10 posiciones enteras</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:decimal">
+               <xs:totalDigits value="10"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica50Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 50 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="50"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="DateType">
+          <xs:annotation>
+               <xs:documentation>Tipo de dato date estándar</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:date"/>
+     </xs:simpleType>
+     <xs:simpleType name="Decimal22Type">
+          <xs:annotation>
+               <xs:documentation>Dato simple decimal de 22 posiciones</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:decimal">
+               <xs:totalDigits value="22"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica1000Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 1000 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="1000"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <!--  COMPLEX TYPES  -->
+     <xs:complexType name="CrearFolioRequest">
+          <xs:sequence>
+               <xs:element name="controlData" type="tlc:ControlDataRequestHeaderType"/>
+               <xs:element name="crearFolioRequest" type="tns:CrearFolioPetType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="CrearFolioResponse">
+          <xs:sequence>
+               <xs:element name="controlData" type="tlc:ControlDataResponseHeaderType"/>
+               <xs:element name="detailResponse" type="tlc:DetailResponseType"/>
+               <xs:element name="crearFolioResponse" type="tns:CrearFolioRespType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="sipabServiceException">
+          <xs:sequence>
+               <xs:element name="controlData" type="tlc:ControlDataResponseHeaderType"/>
+               <xs:element name="detailFail" type="tlc:DetailFailType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="CrearFolioPetType">
+          <xs:sequence>
+               <xs:element maxOccurs="1" minOccurs="1" name="serialNo" type="tlc:CadenaAlfanumerica20Type"/>
+               <xs:element maxOccurs="1" minOccurs="1" name="employeeId" type="tns:CadenaAlfanumerica10Type"/>
+               <xs:element maxOccurs="1" minOccurs="1" name="number" type="tns:Decimal10Type"/>
+               <xs:element maxOccurs="1" minOccurs="0" name="customerName" type="tns:CadenaAlfanumerica50Type"/>
+               <xs:element maxOccurs="1" minOccurs="0" name="mobileNo" type="tns:Decimal10Type"/>
+               <xs:element maxOccurs="1" minOccurs="1" name="timeStamp" type="tns:DateType"/>
+               <xs:element maxOccurs="1" minOccurs="1" name="idtroubleTicket" type="tns:Decimal22Type"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="CrearFolioRespType">
+          <xs:sequence>
+               <xs:element maxOccurs="1" minOccurs="1" name="idResp" type="tlc:CadenaAlfanumerica20Type"/>
+               <xs:element maxOccurs="1" minOccurs="1" name="descResp" type="tns:CadenaAlfanumerica1000Type"/>
+               <xs:element maxOccurs="1" minOccurs="0" name="idFolio" type="tns:Decimal22Type"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:element ibmSchExtn:docRoot="true" name="CrearFolioRequest" type="tns:CrearFolioRequest"/>
+     <xs:element ibmSchExtn:docRoot="true" name="CrearFolioResponse" type="tns:CrearFolioResponse"/>
+     <xs:element name="generalException" type="tns:sipabServiceException"/>
+     <xs:element name="crearFolioPeticion" type="tns:CrearFolioPetType"/>
+</xs:schema>

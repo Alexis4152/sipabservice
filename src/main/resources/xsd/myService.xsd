@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/sipabservice"
+           xmlns:tns="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/sipabservice"
+           elementFormDefault="qualified">
+
+    <!-- Definición del elemento de solicitud -->
+    <xs:element name="MyRequest" type="tns:MyRequest"/>
+
+    <xs:complexType name="MyRequest">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Definición del elemento de respuesta -->
+    <xs:element name="MyResponse" type="tns:MyResponse"/>
+
+    <xs:complexType name="MyResponse">
+        <xs:sequence>
+            <xs:element name="message" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- <xs:element name="CrearFolio">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element> -->
+
+</xs:schema>

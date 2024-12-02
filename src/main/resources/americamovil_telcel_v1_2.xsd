@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:tlc="http://amx.com/mexico/telcel/esb/v1_2" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://amx.com/mexico/telcel/esb/v1_2">
+     <xs:annotation>
+          <xs:documentation>Version del Esquema Corporativo: 1.2.0</xs:documentation>
+     </xs:annotation>
+     <!--  SIMPLE TYPES  -->
+     <xs:simpleType name="CadenaAlfanumerica24Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 24 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="24"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica128Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 128 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="128"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="MessageUUIDType">
+          <xs:annotation>
+               <xs:documentation>Indica el ID único del mensaje. Ejemplo: NNNN-NNNN-NNNN-NNNN (Este ID será generado y enviado por el consumidor del servicio)</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="128"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="DateTimeType">
+          <xs:annotation>
+               <xs:documentation>Formato: YYYY-MM-DDThh:mm:ss.SSS</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:dateTime"/>
+     </xs:simpleType>
+     <xs:simpleType name="SenderType">
+          <xs:annotation>
+               <xs:documentation>Indica el Emisor del mensaje en el Encabezado del Mensaje</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="3"/>
+               <xs:maxLength value="32"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="IPv4AddressType">
+          <xs:annotation>
+               <xs:documentation>Indica la dirección IPv4 en notación decimal con puntos.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="7"/>
+               <xs:maxLength value="15"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="UserType">
+          <xs:annotation>
+               <xs:documentation>Indica el usuario productor del mensaje</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="16"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica20Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 20 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="20"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica1024Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 1024 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="1024"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="BesCbsLanguageCodeType">
+          <xs:annotation>
+               <xs:documentation>A LanguageCode value is a string of 8 bytes, indicating the code of a language type. e.g. 2000 (zh_CN, Chinese)</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:length fixed="true" value="4"/>
+               <xs:pattern value="[0-9]*"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="LatencyType">
+          <xs:annotation>
+               <xs:documentation>Representa la duración en milisegundos</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:int"/>
+     </xs:simpleType>
+     <xs:simpleType name="CodeType">
+          <xs:annotation>
+               <xs:documentation>Representa el código de respuesta</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="32"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="SeverityType">
+          <xs:annotation>
+               <xs:documentation>Indica el tipo de severidad de los errores generados. El criterio deberá establecerse a partir de la categorización de errores por parte del equipo de desarrollo y su criticidad establecida.&#13;
+Los valores pueden ser:&#13;
+0: Info: Sin severidad&#13;
+1: Info: Severidad baja&#13;
+2: Warning: Severidad media&#13;
+3: Fatal: Severidad alta</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:int"/>
+     </xs:simpleType>
+     <xs:simpleType name="DescriptionType">
+          <xs:annotation>
+               <xs:documentation>Representa la descripción de la respuesta con respecto al código de respuesta</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="1024"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="ActorType">
+          <xs:annotation>
+               <xs:documentation>Representa el actor/entidad/sistema que responde</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="32"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="MeaningType">
+          <xs:annotation>
+               <xs:documentation>Representa el significado de la respuesta, el sentido de significado debe ser orientado a negocio o bien capaz de ser auto descriptivo.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="1024"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaType">
+          <xs:annotation>
+               <xs:documentation>Cadena alfanumerica que admite cualquier valor.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string"/>
+     </xs:simpleType>
+     <xs:simpleType name="Decimal20Type">
+          <xs:annotation>
+               <xs:documentation>Tipo de dato decimal, de 20 digitos enteros</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:decimal">
+               <xs:totalDigits value="20"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="BesCrmChannelType">
+          <xs:annotation>
+               <xs:documentation>Channel type. The examples are as follows:&#13;
+601: CRM store&#13;
+602: CRM E-Care&#13;
+603: mobile app&#13;
+604: SMS channel&#13;
+605: self-service terminal&#13;
+606: customer service manual station</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="20"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="BesCbsBEIDType">
+          <xs:annotation>
+               <xs:documentation>ID of a business entity (BE). In the scenario of registering a customer, the default BE ID 101 is used if this parameter is not transferred. Data type used in CBS of the BES project.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string"/>
+     </xs:simpleType>
+     <xs:simpleType name="BesCbsBRIDType">
+          <xs:annotation>
+               <xs:documentation>ID of a business region (BR). Data type used in CBS of the BES project.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string"/>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica1a20Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 1 a 20 caracteres, que admite cualquier valor alfanumérico.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="1"/>
+               <xs:maxLength value="20"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica25Type">
+          <xs:annotation>
+               <xs:documentation>Cadena (string) de 25 caracteres, que admite cualquier valor alfanumérico y vacío.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="25"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="CadenaAlfanumerica4096Type">
+          <xs:annotation>
+               <xs:documentation>Cadena String de 4096 caracteres, que admite cualquier valor alfanumerico y vacio.</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+               <xs:minLength value="0"/>
+               <xs:maxLength value="4096"/>
+          </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="BesCbsTimeZoneType">
+          <xs:annotation>
+               <xs:documentation>A TimeZone value is a string of 5 byte, indicating the time zone. e.g. 1083 (Mexico City, Mexico)</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string"/>
+     </xs:simpleType>
+     <!--  COMPLEX TYPES  -->
+     <xs:complexType name="ControlDataRequestHeaderType">
+          <xs:annotation>
+               <xs:documentation>Dato Corporativo redefinido por las definiciones del nuevo facturador BES. Contiene los datos de control que viajan en la Peticiones de servicios web.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="version" type="tlc:CadenaAlfanumerica24Type"/>
+               <xs:element minOccurs="0" name="businessCode" type="tlc:CadenaAlfanumerica128Type"/>
+               <xs:element name="messageUUID" type="tlc:MessageUUIDType"/>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalProperty" type="tlc:BesAdditionalPropertyType"/>
+               <xs:element name="requestDate" type="tlc:DateTimeType"/>
+               <xs:element name="sendBy" type="tlc:SenderType"/>
+               <xs:element minOccurs="0" name="ipClient" type="tlc:IPv4AddressType"/>
+               <xs:element minOccurs="0" name="ipServer" type="tlc:IPv4AddressType"/>
+               <xs:element minOccurs="0" name="user" type="tlc:UserType"/>
+               <xs:element minOccurs="0" name="besCbsRequestHeader" type="tlc:BesCbsRequestHeaderType"/>
+               <xs:element minOccurs="0" name="besCrmRequestHeader" type="tlc:BesCrmRequestHeaderType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="ControlDataResponseHeaderType">
+          <xs:annotation>
+               <xs:documentation>Dato Corporativo redefinido por las definiciones del nuevo facturador BES. Contiene los datos de control que viajan en la Respuesta de servicios web.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="version" type="tlc:CadenaAlfanumerica24Type"/>
+               <xs:element name="resultCode" type="tlc:CadenaAlfanumerica20Type"/>
+               <xs:element name="resultDesc" type="tlc:CadenaAlfanumerica1024Type"/>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalProperty" type="tlc:BesAdditionalPropertyType"/>
+               <xs:element minOccurs="0" name="msgLanguageCode" type="tlc:BesCbsLanguageCodeType"/>
+               <xs:element name="messageUUID" type="tlc:MessageUUIDType"/>
+               <xs:element name="responseDate" type="tlc:DateTimeType"/>
+               <xs:element name="sendBy" type="tlc:SenderType"/>
+               <xs:element name="latency" type="tlc:LatencyType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="DetailResponseType">
+          <xs:annotation>
+               <xs:documentation>Elemento corporativo complejo</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="code" type="tlc:CodeType"/>
+               <xs:element minOccurs="0" name="severityLevel" type="tlc:SeverityType"/>
+               <xs:element name="description" type="tlc:DescriptionType"/>
+               <xs:element minOccurs="0" name="actor" type="tlc:ActorType"/>
+               <xs:element minOccurs="0" name="businessMeaning" type="tlc:MeaningType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="ErrorType">
+          <xs:annotation>
+               <xs:documentation>Objeto perteneciente al Contrato Corporativo TELCEL v1.2. Representacion de un mensaje de error.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="code" type="tlc:CodeType"/>
+               <xs:element name="severityLevel" type="tlc:SeverityType"/>
+               <xs:element name="description" type="tlc:DescriptionType"/>
+               <xs:element minOccurs="0" name="actor" type="tlc:ActorType"/>
+               <xs:element name="businessMeaning" type="tlc:MeaningType"/>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="properties" type="tlc:PropertyErrorType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="DetailFailType">
+          <xs:annotation>
+               <xs:documentation>Objeto Contrato Corporativo TELCEL v1.2. Representa el arreglo de errores, dentro de un mensaje no exitoso</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element minOccurs="0" name="operationName" type="tlc:CadenaAlfanumerica128Type"/>
+               <xs:element maxOccurs="unbounded" name="errors" type="tlc:ErrorType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesAdditionalPropertyType">
+          <xs:annotation>
+               <xs:documentation>Extended attribute, which is reserved.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="code" type="tlc:CadenaAlfanumerica128Type"/>
+               <xs:element name="value" type="tlc:CadenaAlfanumerica128Type"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCbsRequestHeaderType">
+          <xs:annotation>
+               <xs:documentation>Request Message Header for CBS API services. BES Project.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element minOccurs="0" name="ownershipInfo" type="tlc:BesCbsOwnershipInfoType"/>
+               <xs:element minOccurs="0" name="operatorInfo" type="tlc:BesCbsOperatorInfoType"/>
+               <xs:element minOccurs="0" name="accessMode" type="tlc:CadenaType"/>
+               <xs:element minOccurs="0" name="msgLanguageCode" type="tlc:CadenaType"/>
+               <xs:element minOccurs="0" name="timeFormat" type="tlc:BesCbsTimeFormatType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCrmRequestHeaderType">
+          <xs:annotation>
+               <xs:documentation>Request Message Header for CRM API services. BES Project.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="beId" type="tlc:Decimal20Type"/>
+               <xs:element name="regionId" type="tlc:Decimal20Type"/>
+               <xs:element minOccurs="0" name="operatorInfo" type="tlc:BesCrmOperatorInfoType"/>
+               <xs:element name="channelType" type="tlc:BesCrmChannelType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCbsOperatorInfoType">
+          <xs:annotation>
+               <xs:documentation>Information about an operator who initiates a service.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="operatorID" type="tlc:CadenaType"/>
+               <xs:element minOccurs="0" name="channelID" type="tlc:CadenaType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCbsOwnershipInfoType">
+          <xs:annotation>
+               <xs:documentation>Information about the BE to which customer information belongs.&#13;
+- In the multi-MVNO scenario, the request initiator must set this parameter to information about the BE to which customer information belongs.&#13;
+- In other scenarios, the request initiator sets this parameter to the default BE information.&#13;
+</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="BEID" type="tlc:BesCbsBEIDType"/>
+               <xs:element minOccurs="0" name="BRID" type="tlc:BesCbsBRIDType"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCrmOperatorInfoType">
+          <xs:annotation>
+               <xs:documentation>Information of the operator who initiates the operation. For selfcare channels, it is optional.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="operatorCode" type="tlc:CadenaAlfanumerica1a20Type"/>
+               <xs:element name="orgId" type="tlc:Decimal20Type"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="PropertyErrorType">
+          <xs:annotation>
+               <xs:documentation>Elemento que podrá alojar un par Clave-Valor, para describir el detalle de un evento de error.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="key" type="tlc:CadenaAlfanumerica25Type"/>
+               <xs:element name="value" type="tlc:CadenaAlfanumerica4096Type"/>
+          </xs:sequence>
+     </xs:complexType>
+     <xs:complexType name="BesCbsTimeFormatType">
+          <xs:annotation>
+               <xs:documentation>Time format, including the time type and time zone. &#13;
+NOTE&#13;
+If the value of this parameter is not specified, the local time applies.</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+               <xs:element name="timeType" type="tlc:CadenaType"/>
+               <xs:element minOccurs="0" name="timeZoneID" type="tlc:BesCbsTimeZoneType"/>
+          </xs:sequence>
+     </xs:complexType>
+</xs:schema>

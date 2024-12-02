@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="sipabService" targetNamespace="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice">
+     <wsdl:documentation>
+          <wsdl:appinfo source="WMQI_APPINFO">
+               <MRWSDLAppInfo imported="true">
+                    <binding hasEncoding="false" imported="true" name="sipabServiceHttpBinding" originalBindingStyle="document"/>
+               </MRWSDLAppInfo>
+          </wsdl:appinfo>
+     </wsdl:documentation>
+     <!--JAX-WS RI's version is 2.1.4-b01-.-->
+     <wsdl:types>
+          <xsd:schema targetNamespace="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice">
+               <xsd:include schemaLocation="sipabService_esb_schema1.xsd"/>
+          </xsd:schema>
+     </wsdl:types>
+     <wsdl:message name="crearFolioRequest">
+          <wsdl:part element="tns:crearFolio" name="crearFolioRequest"/>
+     </wsdl:message>
+     <wsdl:message name="crearFolioResponse">
+          <wsdl:part element="tns:crearFolioResponse" name="crearFolioResponse"/>
+     </wsdl:message>
+     <wsdl:message name="generalException">
+          <wsdl:part element="tns:generalException" name="generalException"/>
+     </wsdl:message>
+     <wsdl:portType name="sipabService">
+          <wsdl:operation name="crearFolio">
+               <wsdl:input message="tns:crearFolioRequest" name="crearFolioRequest"/>
+               <wsdl:output message="tns:crearFolioResponse" name="crearFolioResponse"/>
+               <wsdl:fault message="tns:generalException" name="generalException"/>
+          </wsdl:operation>
+     </wsdl:portType>
+     <wsdl:binding name="sipabServiceHttpBinding" type="tns:sipabService">
+          <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+          <wsdl:operation name="crearFolio">
+               <soap:operation soapAction="http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice/crearFolio"/>
+               <wsdl:input name="crearFolioRequest">
+                    <soap:body use="literal"/>
+               </wsdl:input>
+               <wsdl:output name="crearFolioResponse">
+                    <soap:body use="literal"/>
+               </wsdl:output>
+               <wsdl:fault name="generalException">
+                    <soap:fault name="generalException" use="literal"/>
+               </wsdl:fault>
+          </wsdl:operation>
+     </wsdl:binding>
+     <wsdl:service name="sipabServiceHttpService">
+          <wsdl:port binding="tns:sipabServiceHttpBinding" name="sipabServiceHttpPort">
+               <soap:address location="http://localhost:9080/mexico/telcel/di/sds/gsa/esb/dgpsti/sipabservice"/>
+          </wsdl:port>
+     </wsdl:service>
+</wsdl:definitions>
