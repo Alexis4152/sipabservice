@@ -51,9 +51,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCbsOwnershipInfoType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", name = "BEID", required = true)
+    @XmlElement(name = "beid", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String beid;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", name = "BRID")
+    @XmlElement(name = "brid", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String brid;
 
     /**

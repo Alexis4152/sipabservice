@@ -50,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCrmRequestHeaderType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "beId", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected BigDecimal beId;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "regionId", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected BigDecimal regionId;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "operatorInfo", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCrmOperatorInfoType operatorInfo;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "channelType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String channelType;
 
     /**

@@ -25,14 +25,20 @@
             <AppenderRef ref="File"/>
         </Logger>
 
-        <!-- Logger para org.springframework.ws.server.endpoint -->
-        <Logger name="org.springframework.ws.server.endpoint" level="debug" additivity="false">
+        <!-- Logger para Spring WS -->
+        <Logger name="org.springframework.ws" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>
 
-        <!-- Logger para org.springframework.ws -->
-        <Logger name="org.springframework.ws" level="trace" additivity="false">
+        <!-- Logger para JAXB -->
+        <Logger name="org.springframework.oxm.jaxb" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+
+        <!-- Logger para validación de payload -->
+        <Logger name="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>

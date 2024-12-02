@@ -46,9 +46,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCrmOperatorInfoType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "operatorCode", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String operatorCode;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "orgId", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected BigDecimal orgId;
 
     /**

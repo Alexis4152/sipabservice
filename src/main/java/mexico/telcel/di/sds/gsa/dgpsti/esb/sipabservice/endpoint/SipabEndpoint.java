@@ -1,10 +1,13 @@
 package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.endpoint;
 
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 
 import javax.jws.WebService;
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -42,8 +45,11 @@ public class SipabEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CrearFolioRequest")
     @ResponsePayload
-    public JAXBElement<CrearFolioResponse> crearFolioRequest(@RequestPayload JAXBElement<CrearFolioRequest> crearFolioRequest) {
-        CrearFolioRequest requestNew = crearFolioRequest.getValue();
+    public CrearFolioResponse crearFolioRequest(@RequestPayload CrearFolioRequest crearFolioRequest) {
+    //    public JAXBElement<CrearFolioResponse> crearFolioRequest(@RequestPayload JAXBElement<CrearFolioRequest> crearFolioRequest) {
+        //CrearFolioRequest requestNew = crearFolioRequest.getValue();
+
+
         CrearFolioResponse response = new CrearFolioResponse();
         ControlDataResponseHeaderType controlData = new ControlDataResponseHeaderType();
         BesAdditionalPropertyType additionalPropertyType = new BesAdditionalPropertyType();
@@ -52,7 +58,7 @@ public class SipabEndpoint {
 
         try {
     //LOGGER.info("Received SOAP Request 1: " + crearFolioRequest.getCrearFolioRequest().getEmployeeId());
-                        request(requestNew.getCrearFolioRequest(),requestNew.getControlData(), requestNew);
+                        request(crearFolioRequest.getCrearFolioRequest(),crearFolioRequest.getControlData(), crearFolioRequest);
             // Asignar valores a los subelementos requeridos
             controlData.setVersion("1.0"); // Reemplaza "SomeField" con los campos correctos
             controlData.setResultCode("1.0"); // Reemplaza "SomeField" con los campos correctos

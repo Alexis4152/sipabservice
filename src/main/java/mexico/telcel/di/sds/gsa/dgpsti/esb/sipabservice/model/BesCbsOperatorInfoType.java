@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCbsOperatorInfoType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "operatorID", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String operatorID;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "channelID", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String channelID;
 
     /**

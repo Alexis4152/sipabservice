@@ -66,27 +66,27 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class ControlDataRequestHeaderType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "version", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String version;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "businessCode", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String businessCode;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "messageUUID", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String messageUUID;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "additionalProperty", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected List<BesAdditionalPropertyType> additionalProperty;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "requestDate", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected XMLGregorianCalendar requestDate;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "sendBy", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String sendBy;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "ipClient", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String ipClient;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "ipServer", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String ipServer;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "user", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String user;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "besCbsRequestHeader", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCbsRequestHeaderType besCbsRequestHeader;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "besCrmRequestHeader", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCrmRequestHeaderType besCrmRequestHeader;
 
     /**

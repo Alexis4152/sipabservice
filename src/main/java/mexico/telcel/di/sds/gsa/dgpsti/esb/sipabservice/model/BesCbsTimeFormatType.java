@@ -49,9 +49,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCbsTimeFormatType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "timeType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String timeType;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "timeZoneID", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String timeZoneID;
 
     /**

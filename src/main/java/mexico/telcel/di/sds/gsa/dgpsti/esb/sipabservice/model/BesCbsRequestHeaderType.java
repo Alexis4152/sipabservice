@@ -51,15 +51,15 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesCbsRequestHeaderType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "ownershipInfo", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCbsOwnershipInfoType ownershipInfo;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "operatorInfo", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCbsOperatorInfoType operatorInfo;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "accessMode", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String accessMode;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "msgLanguageCode", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String msgLanguageCode;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "timeFormat", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCbsTimeFormatType timeFormat;
 
     /**

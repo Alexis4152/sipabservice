@@ -109,8 +109,9 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         PayloadValidatingInterceptor interceptor = new PayloadValidatingInterceptor();
         interceptor.setSchemas(new ClassPathResource("sipabService_esb_schema1.xsd"),
         new ClassPathResource("americamovil_telcel_v1_2.xsd"));
-        interceptor.setValidateRequest(true);
-        interceptor.setValidateResponse(true);
+        //Al desactivar estas dos validaciones se recibe de forma adecuada los valores en la request
+        interceptor.setValidateRequest(false);
+        interceptor.setValidateResponse(false);
         return interceptor;
     }
 

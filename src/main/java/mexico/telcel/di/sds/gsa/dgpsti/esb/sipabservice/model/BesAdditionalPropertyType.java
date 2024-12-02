@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BesAdditionalPropertyType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "code", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String code;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "value", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String value;
 
     /**
