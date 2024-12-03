@@ -2,7 +2,6 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config;
 
 import java.util.List;
 import java.util.Properties;
-
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

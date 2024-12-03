@@ -59,6 +59,8 @@ public class SipabEndpoint {
         try {
     //LOGGER.info("Received SOAP Request 1: " + crearFolioRequest.getCrearFolioRequest().getEmployeeId());
                         request(crearFolioRequest.getCrearFolioRequest(),crearFolioRequest.getControlData(), crearFolioRequest);
+            
+                        sipabTicketResponse.responseTicket(crearFolioRequest);
             // Asignar valores a los subelementos requeridos
             controlData.setVersion("1.0"); // Reemplaza "SomeField" con los campos correctos
             controlData.setResultCode("1.0"); // Reemplaza "SomeField" con los campos correctos
