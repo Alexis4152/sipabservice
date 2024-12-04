@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -43,7 +44,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ErrorType", propOrder = {
+@XmlRootElement(name = "ErrorType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+@XmlType(name = "ErrorType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
     "code",
     "severityLevel",
     "description",
@@ -53,14 +55,17 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ErrorType {
 
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String code;
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected int severityLevel;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String description;
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String actor;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String businessMeaning;
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected List<PropertyErrorType> properties;
 
     /**

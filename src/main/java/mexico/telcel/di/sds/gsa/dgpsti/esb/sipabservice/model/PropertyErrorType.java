@@ -11,6 +11,7 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -37,15 +38,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PropertyErrorType", propOrder = {
+@XmlRootElement(name = "PropertyErrorType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+@XmlType(name = "PropertyErrorType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
     "key",
     "value"
 })
 public class PropertyErrorType {
 
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String key;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected String value;
 
     /**

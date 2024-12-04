@@ -23,6 +23,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 import org.w3c.dom.ls.LSResourceResolver;
+
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomInterceptor;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomSoapInterceptor;
+
 import org.springframework.core.io.Resource;
 import org.springframework.xml.validation.XmlValidator;
 import javax.servlet.http.HttpServletRequest;
@@ -116,6 +120,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Override
     public void addInterceptors(List<EndpointInterceptor> interceptors) {
+        interceptors.add(new CustomInterceptor());
+        interceptors.add(new CustomSoapInterceptor());
         interceptors.add(validatingInterceptor());
     }
 

@@ -1,7 +1,9 @@
 package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -11,10 +13,27 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.BesAdditionalPrope
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataResponseHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioRespType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioResponse;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.DetailFailType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.DetailResponseType;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ErrorType;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.PropertyErrorType;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.SipabServiceException;
 
 public class Util {
     
+
+    public CrearFolioResponse successResponse(BigDecimal idTroubleTicket){
+        CrearFolioResponse response = new CrearFolioResponse();
+        CrearFolioRespType crearFolioResponse = new CrearFolioRespType();
+            crearFolioResponse.setIdFolio(idTroubleTicket);
+            crearFolioResponse.setIdResp("1");
+            crearFolioResponse.setDescResp("Éxito");
+
+            response.setControlData(controlDataResponse());
+            response.setDetailResponse(detailResposne());
+            response.setCrearFolioResponse(crearFolioResponse);
+            return response;
+    }
 
     public ControlDataResponseHeaderType controlDataResponse(){
         ControlDataResponseHeaderType controlData = new ControlDataResponseHeaderType();
@@ -38,6 +57,7 @@ public class Util {
              // Crear una instancia de XMLGregorianCalendar
              XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
                      .newXMLGregorianCalendar(gregorianCalendar);
+
              controlData.setResponseDate(xmlGregorianCalendar);
             } catch (DatatypeConfigurationException e) {
                 e.printStackTrace();
@@ -54,17 +74,37 @@ public class Util {
         detailResponseType.setBusinessMeaning("a");
         return detailResponseType;
     }
-    public CrearFolioResponse successResponse(BigDecimal idTroubleTicket){
-        CrearFolioResponse response = new CrearFolioResponse();
-        CrearFolioRespType crearFolioResponse = new CrearFolioRespType();
-            crearFolioResponse.setIdFolio(idTroubleTicket);
-            crearFolioResponse.setIdResp("1");
-            crearFolioResponse.setDescResp("Éxito");
 
-            response.setControlData(controlDataResponse());
-            response.setDetailResponse(detailResposne());
-            response.setCrearFolioResponse(crearFolioResponse);
-            return response;
+    public SipabServiceException exceptionResponse(){
+        SipabServiceException response = new SipabServiceException();
+        response.setControlData(controlDataResponse());
+        response.setDetailFail(detalleFallo());
+        return response;
+    }
+
+    public DetailFailType detalleFallo(){
+        DetailFailType detailfFailType = new DetailFailType();
+        detailfFailType.setOperationName("ope");
+        detailfFailType.getErrors().add(tipoError());
+        return detailfFailType;
+    }
+
+    public ErrorType tipoError(){
+        ErrorType errorType = new ErrorType();
+        errorType.setActor("a");
+        errorType.setBusinessMeaning("b");
+        errorType.setCode("0");
+        errorType.setDescription("desc");
+        errorType.setSeverityLevel(1);
+        errorType.getProperties().add(tipoErrores());
+        return errorType;
+    }
+
+    public PropertyErrorType tipoErrores(){
+        PropertyErrorType propertyErrorType = new PropertyErrorType();
+        propertyErrorType.setKey("k");
+        propertyErrorType.setValue("v");
+        return propertyErrorType;
     }
 
     public String formatFecha(XMLGregorianCalendar date) {

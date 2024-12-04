@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -39,14 +40,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DetailFailType", propOrder = {
+@XmlRootElement(name = "DetailFailType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+@XmlType(name = "DetailFailType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
     "operationName",
     "errors"
 })
 public class DetailFailType {
 
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String operationName;
-    @XmlElement(required = true)
+    @XmlElement( namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected List<ErrorType> errors;
 
     /**

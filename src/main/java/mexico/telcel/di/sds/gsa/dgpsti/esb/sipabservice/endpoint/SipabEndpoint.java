@@ -29,6 +29,7 @@ import org.springframework.ws.soap.SoapMessage;
 import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioRequest;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHolder;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.BesAdditionalPropertyType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
@@ -42,6 +43,8 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.SipabServiceExcept
 // import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.service.GeneralException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.service.SipabService;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.service.SipabTicketService;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Util;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,20 +58,26 @@ public class SipabEndpoint {
     @Autowired
     private SipabTicketService sipabTicketResponse;
 
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CrearFolioRequest")
     @ResponsePayload
     public CrearFolioResponse crearFolioRequest(@RequestPayload CrearFolioRequest crearFolioRequest) {
-        // public JAXBElement<CrearFolioResponse> crearFolioRequest(@RequestPayload
-        // JAXBElement<CrearFolioRequest> crearFolioRequest) {
+
         CrearFolioResponse response = new CrearFolioResponse();
         CrearFolioPetType request = crearFolioRequest.getCrearFolioRequest();
-
+        Util tools = new Util();
         try {
 
             response = sipabTicketResponse.responseTicket(request);
 
-            // SipabServiceException error = new SipabServiceException();
-            // throw new CustomSoapFaultException("Validation error occurred", error);
+            SipabServiceException error = tools.exceptionResponse();
+        
+            //Agrega la excepción al contexto
+            MessageContext context = MessageContextHolder.getMessageContext();
+            context.setProperty("exception", new CustomSoapFaultException("Validation error occurred", error));
+
+            
+            throw new CustomSoapFaultException("Validation error occurred", error);
 
         } catch (NullPointerException np) {
             LOGGER.info("null pointer");
@@ -78,25 +87,25 @@ public class SipabEndpoint {
         return response;
     }
 
-    @ExceptionHandler(CustomSoapFaultException.class)
-    public void handleCustomSoapFaultException(CustomSoapFaultException ex, MessageContext messageContext) {
-        SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
-        SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error de validación", Locale.ENGLISH);
+    // @ExceptionHandler(CustomSoapFaultException.class)
+    // public void handleCustomSoapFaultException(CustomSoapFaultException ex, MessageContext messageContext) {
+    //     SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
+    //     SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error de validación", Locale.ENGLISH);
 
-        // Configurar el actor/rol
-        fault.setFaultActorOrRole("http://www.any.org/ventos/verrantque");
+    //     // Configurar el actor/rol
+    //     fault.setFaultActorOrRole("http://www.any.org/ventos/verrantque");
 
-        // Agregar detalles al Fault
-        SoapFaultDetail detail = fault.addFaultDetail();
+    //     // Agregar detalles al Fault
+    //     SoapFaultDetail detail = fault.addFaultDetail();
 
-        try {
-            JAXBContext context = JAXBContext.newInstance(SipabServiceException.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(ex.getSipabServiceException(), detail.getResult());
-        } catch (JAXBException e) {
-            throw new RuntimeException("Error al agregar detalles al Fault", e);
-        }
-    }
+    //     try {
+    //         JAXBContext context = JAXBContext.newInstance(SipabServiceException.class);
+    //         Marshaller marshaller = context.createMarshaller();
+    //         marshaller.marshal(ex.getSipabServiceException(), detail.getResult());
+    //     } catch (JAXBException e) {
+    //         throw new RuntimeException("Error al agregar detalles al Fault", e);
+    //     }
+    // }
 
     public void request(CrearFolioPetType valor, ControlDataRequestHeaderType valor2, CrearFolioRequest source) {
         if (valor != null) {

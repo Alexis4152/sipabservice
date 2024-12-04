@@ -11,6 +11,7 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -35,15 +36,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "sipabServiceException", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice")
 @XmlType(name = "sipabServiceException", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", propOrder = {
     "controlData",
     "detailFail"
 })
 public class SipabServiceException {
 
-    @XmlElement(namespace = "", required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected ControlDataResponseHeaderType controlData;
-    @XmlElement(namespace = "", required = true)
+    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
     protected DetailFailType detailFail;
 
     /**
