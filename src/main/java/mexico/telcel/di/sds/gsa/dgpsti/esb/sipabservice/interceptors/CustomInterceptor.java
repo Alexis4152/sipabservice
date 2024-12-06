@@ -5,6 +5,7 @@ import org.springframework.ws.server.endpoint.interceptor.EndpointInterceptorAda
 
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHolder;
 
+//Clase para manejo de excepciones mediante capturar el tipo de excepción en MessageContext
 public class CustomInterceptor extends EndpointInterceptorAdapter {
 
     @Override

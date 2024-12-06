@@ -6,8 +6,12 @@ import org.springframework.ws.soap.SoapFault;
 import org.springframework.ws.soap.SoapFaultDetail;
 import org.springframework.ws.soap.SoapMessage;
 
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.AssociateTicketException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CreateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.SipabServiceException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Util;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -18,6 +22,8 @@ public class CustomSoapInterceptor extends EndpointInterceptorAdapter {
 
     @Override
     public boolean handleFault(MessageContext messageContext, Object endpoint) {
+        Util tools = new Util();
+        
         // Recupera la excepción desde el contexto
         Object exceptionProperty = messageContext.getProperty("exception");
         
@@ -28,6 +34,48 @@ public class CustomSoapInterceptor extends EndpointInterceptorAdapter {
             // Crea el SoapFault
             SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
             SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error de validación", Locale.ENGLISH);
+            fault.setFaultActorOrRole("http://www.example.org/actor");
+
+            // Agrega detalles al Fault
+            SoapFaultDetail detail = fault.addFaultDetail();
+            try {
+                JAXBContext context = JAXBContext.newInstance(SipabServiceException.class);
+                Marshaller marshaller = context.createMarshaller();
+                marshaller.marshal(ex.getSipabServiceException(), detail.getResult());
+            } catch (JAXBException e) {
+                throw new RuntimeException("Error al agregar detalles al Fault", e);
+            }
+
+            return false; // Detén el flujo adicional
+        }
+
+        if (exceptionProperty instanceof CreateTicketException) {
+            CreateTicketException ex = (CreateTicketException) exceptionProperty;
+
+            // Crea el SoapFault
+            SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
+            SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error de creacion", Locale.ENGLISH);
+            fault.setFaultActorOrRole("http://www.example.org/actor");
+
+            // Agrega detalles al Fault
+            SoapFaultDetail detail = fault.addFaultDetail();
+            try {
+                JAXBContext context = JAXBContext.newInstance(SipabServiceException.class);
+                Marshaller marshaller = context.createMarshaller();
+                marshaller.marshal(ex.getSipabServiceException(), detail.getResult());
+            } catch (JAXBException e) {
+                throw new RuntimeException("Error al agregar detalles al Fault", e);
+            }
+
+            return false; // Detén el flujo adicional
+        }
+
+        if (exceptionProperty instanceof AssociateTicketException) {
+            AssociateTicketException ex = (AssociateTicketException) exceptionProperty;
+
+            // Crea el SoapFault
+            SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
+            SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error de creacion", Locale.ENGLISH);
             fault.setFaultActorOrRole("http://www.example.org/actor");
 
             // Agrega detalles al Fault

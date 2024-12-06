@@ -2,6 +2,7 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -18,92 +19,80 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.DetailResponseType
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ErrorType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.PropertyErrorType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.SipabServiceException;
+import oracle.net.aso.c;
 
 public class Util {
     
 
-    public CrearFolioResponse successResponse(BigDecimal idTroubleTicket){
+    public CrearFolioResponse successResponse(BigDecimal idTroubleTicket,String codigo, String descripcion) {
         CrearFolioResponse response = new CrearFolioResponse();
         CrearFolioRespType crearFolioResponse = new CrearFolioRespType();
-            crearFolioResponse.setIdFolio(idTroubleTicket);
-            crearFolioResponse.setIdResp("1");
-            crearFolioResponse.setDescResp("Éxito");
-
-            response.setControlData(controlDataResponse());
-            response.setDetailResponse(detailResposne());
-            response.setCrearFolioResponse(crearFolioResponse);
-            return response;
+        crearFolioResponse.setIdFolio(idTroubleTicket);
+        crearFolioResponse.setIdResp("12345"); // ID de respuesta actualizado
+        crearFolioResponse.setDescResp("Solicitud completada exitosamente"); // Descripción más adecuada
+        response.setControlData(controlDataResponse(codigo, descripcion));
+        response.setDetailResponse(detailResposne(codigo, descripcion));
+        response.setCrearFolioResponse(crearFolioResponse);
+        return response;
     }
-
-    public ControlDataResponseHeaderType controlDataResponse(){
+    
+    public ControlDataResponseHeaderType controlDataResponse(String codigo, String descripcion) {
         ControlDataResponseHeaderType controlData = new ControlDataResponseHeaderType();
         BesAdditionalPropertyType additionalPropertyType = new BesAdditionalPropertyType();
-        try {
-        controlData.setVersion("1.0"); // Reemplaza "SomeField" con los campos correctos
-            controlData.setResultCode("1.0"); // Reemplaza "SomeField" con los campos correctos
-            controlData.setResultDesc("1.0");
-            additionalPropertyType.setCode("0");
-            additionalPropertyType.setValue("1");
+            controlData.setVersion("1.0"); // Versión establecida
+            controlData.setResultCode(codigo); // Código de resultado actualizado a 200
+            controlData.setResultDesc(descripcion); // Descripción más clara
+            additionalPropertyType.setCode(""); // Código de propiedad adicional
+            additionalPropertyType.setValue(""); // Valor de propiedad adicional
             controlData.getAdditionalProperty().add(additionalPropertyType);
-            controlData.setMsgLanguageCode("a");
-            controlData.setMessageUUID("a");
-            controlData.setSendBy("");
-            controlData.setLatency(1);
-             // Crear un calendario de tipo GregorianCalendar
-             GregorianCalendar gregorianCalendar = new GregorianCalendar();
-             gregorianCalendar.set(2024, GregorianCalendar.NOVEMBER, 26); // Establecer fecha: 26 de noviembre de
-                                                                          // 2024
-
-             // Crear una instancia de XMLGregorianCalendar
-             XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
-                     .newXMLGregorianCalendar(gregorianCalendar);
-
-             controlData.setResponseDate(xmlGregorianCalendar);
-            } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
-            }
-            return controlData;
+            controlData.setMsgLanguageCode("es-MX"); // Idioma en español
+            controlData.setMessageUUID("123e4567-e89b-12d3-a456-426614174000"); // UUID único generado
+            controlData.setSendBy("System"); // Usuario que envía el mensaje
+            controlData.setLatency(150); // Latencia en milisegundos    
+            controlData.setResponseDate(responseDate());
+        return controlData;
     }
-
-    public DetailResponseType detailResposne(){
+    
+    public DetailResponseType detailResposne(String codigo, String descripcion) {
         DetailResponseType detailResponseType = new DetailResponseType();
-        detailResponseType.setCode("a");
-        detailResponseType.setSeverityLevel(1);
-        detailResponseType.setDescription("1");
-        detailResponseType.setActor("a");
-        detailResponseType.setBusinessMeaning("a");
+        detailResponseType.setCode(codigo); // Código de respuesta actualizado a 200
+        detailResponseType.setSeverityLevel(0); // Nivel de severidad ajustado a INFO
+        detailResponseType.setDescription(descripcion); // Descripción clara
+        detailResponseType.setActor("Servicio Central"); // Actor que maneja la respuesta
+        detailResponseType.setBusinessMeaning("Confirmación de la operación"); // Significado comercial ajustado
         return detailResponseType;
     }
+    
 
-    public SipabServiceException exceptionResponse(){
+    public SipabServiceException exceptionResponse(String codigo, String descripcion, Integer severityLevel){
         SipabServiceException response = new SipabServiceException();
-        response.setControlData(controlDataResponse());
-        response.setDetailFail(detalleFallo());
+        response.setControlData(controlDataResponse(codigo, descripcion));
+        response.setDetailFail(detalleFallo(codigo, descripcion, severityLevel));
         return response;
     }
 
-    public DetailFailType detalleFallo(){
+    public DetailFailType detalleFallo(String codigo, String descripcion, Integer severityLevel){
         DetailFailType detailfFailType = new DetailFailType();
-        detailfFailType.setOperationName("ope");
-        detailfFailType.getErrors().add(tipoError());
+        detailfFailType.setOperationName("crearFolio");
+        detailfFailType.getErrors().add(tipoError(codigo, descripcion, severityLevel));
         return detailfFailType;
     }
 
-    public ErrorType tipoError(){
+    public ErrorType tipoError(String codigo, String descripcion, Integer severityLevel){
         ErrorType errorType = new ErrorType();
-        errorType.setActor("a");
-        errorType.setBusinessMeaning("b");
-        errorType.setCode("0");
-        errorType.setDescription("desc");
-        errorType.setSeverityLevel(1);
+        errorType.setActor("Servicio Central");
+        errorType.setBusinessMeaning("Confirmación de la operación");
+        errorType.setCode(codigo);
+        errorType.setDescription(descripcion);
+        errorType.setSeverityLevel(severityLevel);
         errorType.getProperties().add(tipoErrores());
         return errorType;
     }
 
     public PropertyErrorType tipoErrores(){
         PropertyErrorType propertyErrorType = new PropertyErrorType();
-        propertyErrorType.setKey("k");
-        propertyErrorType.setValue("v");
+        propertyErrorType.setKey("");
+        propertyErrorType.setValue("");
         return propertyErrorType;
     }
 
@@ -115,4 +104,19 @@ public class Util {
                 .toLocalDateTime();
         return localDateTime.format(formatter);
     }
+
+    public XMLGregorianCalendar responseDate() {
+        // Crear un calendario de tipo GregorianCalendar
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        XMLGregorianCalendar response = null;
+        try {
+            gregorianCalendar.setTime(new Date());
+            response = DatatypeFactory.newInstance()
+                    .newXMLGregorianCalendar(gregorianCalendar);
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
 }
