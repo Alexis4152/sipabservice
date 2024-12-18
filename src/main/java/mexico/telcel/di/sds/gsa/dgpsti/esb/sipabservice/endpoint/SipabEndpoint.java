@@ -10,6 +10,7 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioRequest;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHolder;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.AssociateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CreateTicketException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioPetType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioResponse;
@@ -31,12 +32,13 @@ public class SipabEndpoint {
     @PayloadRoot(namespace = Constantes.NAMESPACE_URI, localPart = "CrearFolioRequest")
     @ResponsePayload
     public CrearFolioResponse crearFolioRequest(@RequestPayload CrearFolioRequest crearFolioRequest)
-    throws CreateTicketException, AssociateTicketException {
+    throws CustomSoapFaultException, CreateTicketException, AssociateTicketException {
         CrearFolioResponse response = new CrearFolioResponse();
         CrearFolioPetType request = crearFolioRequest.getCrearFolioRequest();
+        ControlDataRequestHeaderType control = crearFolioRequest.getControlData();
         try {
 
-            response = sipabTicketResponse.responseTicket(request);
+            response = sipabTicketResponse.validation(request,control);
 
             // SipabServiceException error = tools.exceptionResponse();
         
@@ -48,8 +50,6 @@ public class SipabEndpoint {
             np.printStackTrace();
         }
 
-
-        // Lógica para procesar el request CrearFolio.
         return response;
     }
 

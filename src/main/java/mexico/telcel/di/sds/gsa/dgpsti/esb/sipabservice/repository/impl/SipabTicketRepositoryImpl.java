@@ -22,6 +22,7 @@ public class SipabTicketRepositoryImpl implements Sipab4TicketRepository {
 
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
+    //java.sql.SQLIntegrityConstraintViolationException:
     @Override
     public int saveTicket(CrearFolioPetType ticket) throws BadSqlGrammarException{
         Util tools = new Util();

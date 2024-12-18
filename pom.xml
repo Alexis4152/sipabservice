@@ -50,18 +50,19 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
+				
+				<!-- PARA WEBSPHERE
+				<exclusion>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>-->
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
-		</dependency>
+		</dependency> 
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -90,11 +91,19 @@
 			<artifactId>jaxb-runtime</artifactId>
 			<version>2.3.2</version>			<!-- Compatible with Java 8 -->
 		</dependency>
+		<!-- ORACLE 19C 
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<version>21.1.0.0</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>12.1.0.2</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.ws.xmlschema/xmlschema-core -->
 		<dependency>
 			<groupId>org.apache.ws.xmlschema</groupId>
@@ -138,23 +147,43 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-
-		<!-- <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-logging</artifactId>
-    <scope>provided</scope>
-</dependency> -->
+<!-- PARA DESPLIEGUE EN WEBSPHERE--> 
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+	<scope>provided</scope>
+</dependency>
 
 
 	</dependencies>
 
 	<build>
+	<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
+		<!-- PARA DESPLIEGUE EN LIBERTY-->
+		<plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <appsDirectory>apps</appsDirectory>
+					<mainClass>${start-class}</mainClass>
+                    <installAppPackages>spring-boot-project</installAppPackages>
+                </configuration>
+            </plugin>
+		<!-- PARA DESPLIEGUE EN LIBERTY-->
 			<!-- Donde están tus archivos XSD -->
 			<!-- Donde se generarán las clases -->
 			<!-- Paquete destino -->
