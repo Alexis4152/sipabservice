@@ -11,6 +11,10 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHol
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.AssociateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CreateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.DatabaseConnectionException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.GeneralDatabaseException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.PasswordExpiredException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.WrongCredentialsException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioPetType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioResponse;
@@ -32,7 +36,7 @@ public class SipabEndpoint {
     @PayloadRoot(namespace = Constantes.NAMESPACE_URI, localPart = "CrearFolioRequest")
     @ResponsePayload
     public CrearFolioResponse crearFolioRequest(@RequestPayload CrearFolioRequest crearFolioRequest)
-    throws CustomSoapFaultException, CreateTicketException, AssociateTicketException {
+    throws CustomSoapFaultException, CreateTicketException, AssociateTicketException, PasswordExpiredException, WrongCredentialsException, GeneralDatabaseException, DatabaseConnectionException {
         CrearFolioResponse response = new CrearFolioResponse();
         CrearFolioPetType request = crearFolioRequest.getCrearFolioRequest();
         ControlDataRequestHeaderType control = crearFolioRequest.getControlData();

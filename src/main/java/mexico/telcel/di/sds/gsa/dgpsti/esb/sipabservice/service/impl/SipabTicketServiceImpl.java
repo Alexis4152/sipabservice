@@ -2,16 +2,21 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.service.impl;
 
 import java.util.List;
 import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.context.MessageContext;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHolder;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.AssociateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CreateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.DatabaseConnectionException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.GeneralDatabaseException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.PasswordExpiredException;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.WrongCredentialsException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioPetType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioResponse;
@@ -22,6 +27,7 @@ import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.service.SipabTicketServi
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Util;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.UtilValidation;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes.StatusCode;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes.SeverityLevel;
 
 @Service
@@ -36,7 +42,7 @@ public class SipabTicketServiceImpl implements SipabTicketService{
 
     @Override
     public CrearFolioResponse validation(CrearFolioPetType data, ControlDataRequestHeaderType control) throws CustomSoapFaultException,
-    CreateTicketException, AssociateTicketException {
+    CreateTicketException, AssociateTicketException, DataAccessException {
         CrearFolioResponse response = new CrearFolioResponse();
         UtilValidation utilValidation = new UtilValidation();
         Map<String, List<ErrorType>> responseValidation = utilValidation.validate(data, control);
@@ -46,7 +52,7 @@ public class SipabTicketServiceImpl implements SipabTicketService{
             SipabServiceException error = util.exceptionResponse(String.valueOf(StatusCode.VALIDATION.getCode()), StatusCode.VALIDATION.getDescription(), SeverityLevel.VALIDATION.getCode(), errores);
             //Seteo de la excepción en messageContext para que el custom interceptor pueda identificar el tipo de excepción
             MessageContext context = MessageContextHolder.getMessageContext();
-            context.setProperty("exception", new CustomSoapFaultException("Errores de validación", error));
+            context.setProperty(Constantes.EXCEPTION, new CustomSoapFaultException("Errores de validación", error));
             throw new CustomSoapFaultException("Errores de validación", error);
         }
         else{
@@ -58,7 +64,8 @@ public class SipabTicketServiceImpl implements SipabTicketService{
     }
 
     @Override
-    public CrearFolioResponse responseTicket(CrearFolioPetType datosTicket) throws CreateTicketException, AssociateTicketException {
+    public CrearFolioResponse responseTicket(CrearFolioPetType datosTicket) throws CreateTicketException, AssociateTicketException,
+    DataAccessException {
 
         CrearFolioResponse response = new CrearFolioResponse();
 
@@ -89,7 +96,7 @@ public class SipabTicketServiceImpl implements SipabTicketService{
                 SipabServiceException error = util.exceptionResponse(String.valueOf(StatusCode.ERROR_TICKET_EMPLEADO.getCode()), StatusCode.ERROR_TICKET_EMPLEADO.getDescription(), SeverityLevel.NEGOCIO.getCode(), null);
                 //Seteo de la excepción en messageContext para que el custom interceptor pueda identificar el tipo de excepción
                 MessageContext context = MessageContextHolder.getMessageContext();
-                context.setProperty("exception", new AssociateTicketException("Error al crear al asociar el empleado con el ticket", error));
+                context.setProperty(Constantes.EXCEPTION, new AssociateTicketException("Error al crear al asociar el empleado con el ticket", error));
                 throw new AssociateTicketException("Error al crear al asociar el empleado con el ticket", error);
             }
 
@@ -99,7 +106,7 @@ public class SipabTicketServiceImpl implements SipabTicketService{
             SipabServiceException error = util.exceptionResponse(String.valueOf(StatusCode.ERROR_TICKET.getCode()), StatusCode.ERROR_TICKET.getDescription(), SeverityLevel.NEGOCIO.getCode(), null);
             //Seteo de la excepción en messageContext para que el custom interceptor pueda identificar el tipo de excepción
             MessageContext context = MessageContextHolder.getMessageContext();
-            context.setProperty("exception", new CreateTicketException("Error al crear el ticket", error));
+            context.setProperty(Constantes.EXCEPTION, new CreateTicketException("Error al crear el ticket", error));
             throw new CreateTicketException("Error al crear el ticket", error);
         }
         

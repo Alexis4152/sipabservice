@@ -2,24 +2,23 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.datatype.XMLGregorianCalendar;
 
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioPetType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ErrorType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ValidationRule;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes.ErrorLongitud;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes.ErrorVacio;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.util.Constantes.Longitud;
 
 public class UtilValidation {
 
@@ -27,6 +26,19 @@ public class UtilValidation {
 
     Util util = new Util();
 
+
+    public static boolean isBigDecimal(Object value) {
+        if (value instanceof BigDecimal) {
+            return true;
+        }
+        try {
+            new BigDecimal(value.toString());
+            return true;
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
+    }
+    
     public boolean validateLongitudBigDecimal(BigDecimal valor, Integer esperado) {
         int valorReal = valor.unscaledValue().toString().length();
         return valorReal > esperado;
@@ -47,12 +59,31 @@ public class UtilValidation {
         return valor.length() >= inicio && valor.length() <= fin;
     }
 
+    public static boolean isXmlGregorianCalendar(Object value) {
+    if (value instanceof XMLGregorianCalendar) {
+        return true;
+    }
+    try {
+        DatatypeFactory.newInstance().newXMLGregorianCalendar(value.toString());
+        return true;
+    } catch (Exception e) {
+        return false;
+
+    }
+}
     public static boolean validateDateTime(XMLGregorianCalendar fecha) {
         String fechaStr = fecha.toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        // Validar con o sin zona horaria
+        DateTimeFormatter formatterSinZona = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter formatterConZona = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
         try {
-            LocalDateTime.parse(fechaStr, formatter);
-            return true; // Si se parsea sin excepciones, es válido
+            if (fechaStr.contains("Z") || fechaStr.contains("+") || fechaStr.contains("-")) {
+                OffsetDateTime.parse(fechaStr, formatterConZona); // Valida con zona horaria
+            } else {
+                LocalDateTime.parse(fechaStr, formatterSinZona); // Valida sin zona horaria
+            }
+            return true;
         } catch (DateTimeParseException e) {
             return false; // Si lanza excepción, el formato no es válido
         }
@@ -64,12 +95,14 @@ public class UtilValidation {
 
     public List<ErrorType> validateTextos(ValidationRule rule) {
         List<ErrorType> errores = new ArrayList<>();
+        boolean esNulo = false;
         if (!validateString(rule.getValue())){
             LOGGER.info("Es vacio o nulo");
+            esNulo = true;
             errores.add(util.setErrorType(rule.getCodeVacio(), rule.getCodeVacioDescripcion()));
         }
-        if (!validateRango(rule.getValue(), rule.getRango())){
-            LOGGER.info("No cumple con el rango {}",rule.getRango());
+        if (!esNulo && !validateRango(rule.getValue(), rule.getRango())){
+            LOGGER.info("No cumple con el rango {} valor {}",rule.getRango(), rule.getValue());
             errores.add(util.setErrorType(rule.getCodeLongitud(), rule.getCodeLongitudDescripcion()));
         }
         return errores;
@@ -77,12 +110,20 @@ public class UtilValidation {
 
     public List<ErrorType> validateNumericos(ValidationRule rule) {
         List<ErrorType> errores = new ArrayList<>();
-        if (!validateBigDecimal(rule.getValueBigDecimal())){
+        boolean esNulo = false;
+        boolean isBigDecimal =true;
+        if(!isBigDecimal(rule.getValueBigDecimal())){
+            LOGGER.info("No es BigDecimal");
+            isBigDecimal = false;
+            errores.add(util.setErrorType(ErrorVacio.NO_BIGDECIMAL.getCode(), rule.getRule()+ " "+ErrorVacio.NO_BIGDECIMAL.getDescription()));
+        }
+        if (isBigDecimal && !validateBigDecimal(rule.getValueBigDecimal())){
             LOGGER.info("Es nulo");
+            esNulo = true;
             errores.add(util.setErrorType(rule.getCodeVacio(), rule.getCodeVacioDescripcion()));
         }
-        if (validateLongitudBigDecimal(rule.getValueBigDecimal(), rule.getLongitudFinal())){
-            LOGGER.info("Es diferente de {}",rule.getLongitudFinal());
+        if (isBigDecimal && !esNulo && validateLongitudBigDecimal(rule.getValueBigDecimal(), rule.getLongitudFinal())){
+            LOGGER.info("Es diferente de {} valor {}",rule.getLongitudFinal(),rule.getValueBigDecimal());
             errores.add(util.setErrorType(rule.getCodeLongitud(), rule.getCodeLongitudDescripcion()));
         }
         return errores;
@@ -90,12 +131,21 @@ public class UtilValidation {
 
     public List<ErrorType> validateDates(ValidationRule rule) {
         List<ErrorType> errores = new ArrayList<>();
-        if (!isDateNull(rule.getValueDate())){
+        boolean esNulo = false;
+        boolean isDate = true;
+
+        if(!isXmlGregorianCalendar(rule.getValueDate())){
+            LOGGER.info("No es XmlGregorianCalendar");
+            isDate = false;
+            errores.add(util.setErrorType(ErrorVacio.NO_XMLGREGORYCALENDAR.getCode(), rule.getRule()+ " "+ErrorVacio.NO_XMLGREGORYCALENDAR.getDescription()));
+        }
+        if (isDate && !isDateNull(rule.getValueDate())){
             LOGGER.info("Es nula");
+            esNulo = true;
             errores.add(util.setErrorType(rule.getCodeVacio(), rule.getCodeVacioDescripcion()));
         }
-        if (validateDateTime(rule.getValueDate())){
-            LOGGER.info("No cumple con el formato ");
+        if (isDate && !esNulo && validateDateTime(rule.getValueDate())){
+            LOGGER.info("No cumple con el formato {}",rule.getValueDate());
             errores.add(util.setErrorType(rule.getCodeVacio(), rule.getCodeVacioDescripcion()));
         }
         return errores;

@@ -26,6 +26,7 @@ import org.w3c.dom.ls.LSResourceResolver;
 
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomInterceptor;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomSoapInterceptor;
+import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.DatabaseExceptionInterceptor;
 
 import org.springframework.core.io.Resource;
 import org.springframework.xml.validation.XmlValidator;
@@ -120,9 +121,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Override
     public void addInterceptors(List<EndpointInterceptor> interceptors) {
-        interceptors.add(new CustomInterceptor());
-        interceptors.add(new CustomSoapInterceptor());
-        interceptors.add(validatingInterceptor());
+        interceptors.add(new CustomInterceptor());//Interceptor para mannipular y administrar las excepciones
+        interceptors.add(new CustomSoapInterceptor());//Interceptor para errores de validación, creación de ticket y asociación con el empleado
+        interceptors.add(new DatabaseExceptionInterceptor());//Interceptor para errores de base de datos
+        interceptors.add(validatingInterceptor());//Interceptor para validar las request contra los XSD
     }
 
 }
