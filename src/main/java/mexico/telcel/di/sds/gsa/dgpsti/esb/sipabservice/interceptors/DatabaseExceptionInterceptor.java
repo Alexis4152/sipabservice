@@ -40,7 +40,7 @@ public class DatabaseExceptionInterceptor extends EndpointInterceptorAdapter {
                 SQLException sqlException = (SQLException) cause;
                 Integer errorCode = sqlException.getErrorCode();
 
-                if(errorCode == 28001){//if (sqlException.getMessage().contains("ORA-28001")) {
+                if(errorCode == 28001){
                     error = util.exceptionResponse(
                             ErrorDataBase.PASSWORD_EXPIRADO.getCode(),
                             ErrorDataBase.PASSWORD_EXPIRADO.getDescription() + " " + sqlException.getMessage(),
@@ -50,7 +50,7 @@ public class DatabaseExceptionInterceptor extends EndpointInterceptorAdapter {
                     return false; // Detén el flujo adicional
 
                 } 
-                if(errorCode == 1017){//else if (sqlException.getMessage().contains("ORA-01017")) {
+                if(errorCode == 1017){
                     error = util.exceptionResponse(
                             ErrorDataBase.PAASWORD_INCORRECTO.getCode(),
                             ErrorDataBase.PAASWORD_INCORRECTO.getDescription() + " " + sqlException.getMessage(),

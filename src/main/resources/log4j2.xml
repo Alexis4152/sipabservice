@@ -7,8 +7,8 @@
         </Console>
         
         <!-- Archivo -->
-        <!--<File name="File" fileName="/opt/IBM/logs/WLP_GCBSPC_SFCF_MONITORCE/sipabService.log">-->
-        <File name="File" fileName="C:/ComplementoPago/java/logs/sipabService.log">
+        <File name="File" fileName="/opt/IBM/logs/WLP_GCBSPC_SFCF_MONITORCE/sipabService.log">
+        <!--<File name="File" fileName="C:/ComplementoPago/java/logs/sipabService.log">-->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
     </Appenders>

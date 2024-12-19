@@ -28,7 +28,7 @@ public class Constantes {
         ERROR(0, "Respuesta no éxitosa"),
         ERROR_TICKET(100, "No se pudo crear el ticket"),
         ERROR_TICKET_EMPLEADO(101, "No se pudo asociar el ticket con el empleado"),
-        EXCEPTCION(500, "Excepcion ocurrida"),
+        // EXCEPTCION(500, "Excepcion ocurrida"),
         VALIDATION(300, "Error de validación");
     
         private final int code;

@@ -1,0 +1,8 @@
+Run Spring boot in liberty
+https://stackoverflow-com.translate.goog/questions/60686523/run-spring-boot-application-on-liberty-server?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc
+
+Create endpoint and services for soap
+https://stackoverflow.com/questions/14390474/no-adapter-for-endpoint-is-your-endpoint-annotated-with-endpoint-or-does-it-i
+
+DefaultWsdl11Definition - implementación para generar WS SOAP
+https://docs.spring.io/spring-ws/docs/current/api/org/springframework/ws/wsdl/wsdl11/DefaultWsdl11Definition.html#setSoapActions(java.util.Properties)
