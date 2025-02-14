@@ -46,11 +46,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class CrearFolioRespType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String idResp;
-    @XmlElement(namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String descResp;
-    @XmlElement(namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice")
+    @XmlElement(namespace = "")
     protected BigDecimal idFolio;
 
     /**

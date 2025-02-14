@@ -55,17 +55,17 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ErrorType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String code;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(namespace = "")
     protected int severityLevel;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String description;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(namespace = "")
     protected String actor;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String businessMeaning;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(namespace = "")
     protected List<PropertyErrorType> properties;
 
     /**

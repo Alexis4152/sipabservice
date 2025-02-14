@@ -48,7 +48,7 @@ public class CustomSoapInterceptor extends EndpointInterceptorAdapter {
     public void createSoapFault(MessageContext messageContext, SipabServiceException sipabServiceException) {
         // Crea el SoapFault
         SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
-        SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error en base de datos", Locale.ENGLISH);
+        SoapFault fault = soapMessage.getSoapBody().addServerOrReceiverFault("Error", Locale.ENGLISH);
         fault.setFaultActorOrRole("http://www.example.org/actor");
 
         // Agrega detalles al Fault

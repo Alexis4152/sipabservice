@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PropertyErrorType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String key;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String value;
 
     /**

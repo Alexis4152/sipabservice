@@ -10,29 +10,18 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.server.EndpointInterceptor;
+import org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
-import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
-import org.springframework.xml.xsd.XsdSchema;
 import org.springframework.xml.xsd.XsdSchemaCollection;
 import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
-import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.resource.ResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolverChain;
-import org.w3c.dom.ls.LSResourceResolver;
-
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomInterceptor;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.CustomSoapInterceptor;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.interceptors.DatabaseExceptionInterceptor;
-
-import org.springframework.core.io.Resource;
-import org.springframework.xml.validation.XmlValidator;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor;
-
+import org.springframework.ws.soap.server.endpoint.mapping.SoapActionEndpointMapping;
 
 @EnableWs
 @Configuration
@@ -63,7 +52,6 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean(name = "sipabService")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchemaCollection schemaCollection) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        // Este es el nombre del puerto que se verá en el WSDL
         Properties actions = new Properties();
         actions.setProperty("CrearFolioRequest", "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice");
         wsdl11Definition.setSoapActions(actions);
@@ -73,21 +61,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         wsdl11Definition.setSchemaCollection(schemaCollection);
         return wsdl11Definition;
     }
- 
 
-    // @Bean(name = "sipabService")
-    // public SimpleWsdl11Definition simpleWsdl11Definition() {
-    //     SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-    //    // wsdl11Definition.setWsdl(null);
-    //     wsdl11Definition.setWsdl(new ClassPathResource("sipabService_esb.wsdl"));
-    //     return wsdl11Definition;
-    // }
 
-    
-    // public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    //     registry.addResourceHandler("/**/*.wsdl", "/**/*.xsd")
-    //             .addResourceLocations("classpath:/");
-    // }
+
+
 
     @Bean
     public Jaxb2Marshaller marshaller() {
@@ -118,6 +95,19 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         interceptor.setValidateResponse(false);
         return interceptor;
     }
+
+    //Debido a que en las clases en el paquete model, anteriormente necesitaba ser definido
+    //el esquema en cada variable, pero con esto, esas clases solo necesitan tener definida
+    //la anotación @XmlRootElement
+    //las request funcionan sin practicamente ningun targetNameSpace en sus clases
+    //Esto se asegura de que Spring WS mapea correctamente el Body de la solicitud SOAP al objeto CrearFolioRequest
+    @Bean
+    public PayloadRootQNameEndpointMapping payloadRootQNameEndpointMapping() {
+        PayloadRootQNameEndpointMapping mapping = new PayloadRootQNameEndpointMapping();
+        mapping.setDefaultEndpoint(new SoapActionEndpointMapping());
+        return mapping;
+    }
+
 
     @Override
     public void addInterceptors(List<EndpointInterceptor> interceptors) {

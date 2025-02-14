@@ -45,11 +45,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class CrearFolioResponse {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected ControlDataResponseHeaderType controlData;
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected DetailResponseType detailResponse;
-    @XmlElement(namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected CrearFolioRespType crearFolioResponse;
 
     /**

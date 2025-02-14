@@ -55,7 +55,7 @@ public class Util {
             additionalPropertyType.setCode(""); // Código de propiedad adicional
             additionalPropertyType.setValue(""); // Valor de propiedad adicional
             controlData.getAdditionalProperty().add(additionalPropertyType);
-            controlData.setMsgLanguageCode("es-MX"); // Idioma en español
+            controlData.setMsgLanguageCode("2000"); // Idioma en español
             controlData.setMessageUUID("123e4567-e89b-12d3-a456-426614174000"); // UUID único generado, es el mismo que se recibe como request
             controlData.setSendBy("System"); // Usuario que envía el mensaje
             controlData.setLatency(150); // Latencia en milisegundos    
@@ -169,8 +169,8 @@ public class Util {
         rules.add(new ValidationRule("SEND_BY", control.getSendBy(), ErrorVacio.SEND_BY.getCode(), ErrorVacio.SEND_BY.getDescription(),
         ErrorLongitud.SEND_BY.getCode(), ErrorLongitud.SEND_BY.getDescription(), Longitud.SEND_BY.getRango()));
 
-        rules.add(new ValidationRule("TROUBLE_TICKET_ID", data.getIdtroubleTicket(), ErrorVacio.TROUBLE_TICKET_ID.getCode(), ErrorVacio.TROUBLE_TICKET_ID.getDescription(),
-        ErrorLongitud.TROUBLE_TICKET_ID.getCode(), ErrorLongitud.TROUBLE_TICKET_ID.getDescription(), 22));
+        // rules.add(new ValidationRule("TROUBLE_TICKET_ID", data.getIdtroubleTicket(), ErrorVacio.TROUBLE_TICKET_ID.getCode(), ErrorVacio.TROUBLE_TICKET_ID.getDescription(),
+        // ErrorLongitud.TROUBLE_TICKET_ID.getCode(), ErrorLongitud.TROUBLE_TICKET_ID.getDescription(), 22));
         
         rules.add(new ValidationRule("NUMBER", data.getNumber(), ErrorVacio.NUMBER.getCode(), ErrorVacio.NUMBER.getDescription(),
         ErrorLongitud.NUMBER.getCode(), ErrorLongitud.NUMBER.getDescription(), 10));
@@ -194,7 +194,7 @@ public class Util {
         val.put("VERSION", "1");
         val.put("MESSAGE_UUID", "1");
         val.put("SEND_BY", "1");
-        val.put("TROUBLE_TICKET_ID", "2");
+        //val.put("TROUBLE_TICKET_ID", "2");
         val.put("NUMBER", "2");
         val.put("MOBILE_NO", "2");
         val.put("TIMESTAMP", "3");

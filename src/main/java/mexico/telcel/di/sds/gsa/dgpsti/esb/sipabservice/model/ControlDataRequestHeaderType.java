@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2024.11.24 a las 04:17:51 PM CST 
+// Generado el: 2025.02.13 a las 10:26:53 AM CST 
 //
 
 
@@ -13,7 +13,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -50,8 +49,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "ControlDataRequestHeaderType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
-@XmlType(name = "ControlDataRequestHeaderType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
+@XmlType(name = "ControlDataRequestHeaderType", propOrder = {
     "version",
     "businessCode",
     "messageUUID",
@@ -66,27 +64,20 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class ControlDataRequestHeaderType {
 
-    @XmlElement(name = "version", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(required = true)
     protected String version;
-    @XmlElement(name = "businessCode", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String businessCode;
-    @XmlElement(name = "messageUUID", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(required = true)
     protected String messageUUID;
-    @XmlElement(name = "additionalProperty", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected List<BesAdditionalPropertyType> additionalProperty;
-    @XmlElement(name = "requestDate", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(required = true)
     protected XMLGregorianCalendar requestDate;
-    @XmlElement(name = "sendBy", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(required = true)
     protected String sendBy;
-    @XmlElement(name = "ipClient", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String ipClient;
-    @XmlElement(name = "ipServer", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String ipServer;
-    @XmlElement(name = "user", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String user;
-    @XmlElement(name = "besCbsRequestHeader", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCbsRequestHeaderType besCbsRequestHeader;
-    @XmlElement(name = "besCrmRequestHeader", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected BesCrmRequestHeaderType besCrmRequestHeader;
 
     /**

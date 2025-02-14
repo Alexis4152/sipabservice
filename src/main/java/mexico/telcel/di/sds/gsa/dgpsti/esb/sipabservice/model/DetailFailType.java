@@ -47,9 +47,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class DetailFailType {
 
-    @XmlElement(namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(namespace = "")
     protected String operationName;
-    @XmlElement( namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement( namespace = "", required = true)
     protected List<ErrorType> errors;
 
     /**

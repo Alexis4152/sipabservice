@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2024.11.24 a las 04:17:51 PM CST 
+// Generado el: 2025.02.13 a las 10:26:53 AM CST 
 //
 
 
@@ -11,17 +11,13 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Information about the BE to which customer information belongs.
-
- * - In the multi-MVNO scenario, the request initiator must set this parameter to information about the BE to which customer information belongs.
-
- * - In other scenarios, the request initiator sets this parameter to the default BE information.
-
+ * Information about the BE to which customer information belongs.
+ * - In the multi-MVNO scenario, the request initiator must set this parameter to information about the BE to which customer information belongs.
+ * - In other scenarios, the request initiator sets this parameter to the default BE information.
  * 
  * 
  * <p>Clase Java para BesCbsOwnershipInfoType complex type.
@@ -44,16 +40,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "BesCbsOwnershipInfoType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
-@XmlType(name = "BesCbsOwnershipInfoType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
+@XmlType(name = "BesCbsOwnershipInfoType", propOrder = {
     "beid",
     "brid"
 })
 public class BesCbsOwnershipInfoType {
 
-    @XmlElement(name = "beid", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(name = "BEID", required = true)
     protected String beid;
-    @XmlElement(name = "brid", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
+    @XmlElement(name = "BRID")
     protected String brid;
 
     /**

@@ -6,17 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.context.MessageContext;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.config.MessageContextHolder;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.AssociateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CreateTicketException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.CustomSoapFaultException;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.DatabaseConnectionException;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.GeneralDatabaseException;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.PasswordExpiredException;
-import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.exception.WrongCredentialsException;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.ControlDataRequestHeaderType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioPetType;
 import mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model.CrearFolioResponse;
@@ -69,12 +64,6 @@ public class SipabTicketServiceImpl implements SipabTicketService{
 
         CrearFolioResponse response = new CrearFolioResponse();
 
-        // try{
-
-        // }
-        // catch(BadSqlGrammarException bsql){
-        //     LOGGER.info("sipabService - Error en la estructura del query {}", bsql.getMessage());
-        // }
         LOGGER.info("sipabService - Comenzando flujo para enrolamiento de ticket con empleado");
         
         Integer ticketCreado = sipab4TicketRepository.saveTicket(datosTicket);

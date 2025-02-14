@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2024.11.24 a las 04:17:51 PM CST 
+// Generado el: 2025.02.13 a las 10:26:53 AM CST 
 //
 
 
@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -43,7 +42,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "CrearFolioPetType", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice")
 @XmlType(name = "CrearFolioPetType", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", propOrder = {
     "serialNo",
     "employeeId",
@@ -55,19 +53,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class CrearFolioPetType {
 
-    @XmlElement(name = "serialNo", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String serialNo;
-    @XmlElement(name = "employeeId", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected String employeeId;
-    @XmlElement(name = "number", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected BigDecimal number;
-    @XmlElement(name = "customerName", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice")
+    @XmlElement(namespace = "")
     protected String customerName;
-    @XmlElement(name = "mobileNo", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice")
+    @XmlElement(namespace = "")
     protected BigDecimal mobileNo;
-    @XmlElement(name = "timeStamp", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected XMLGregorianCalendar timeStamp;
-    @XmlElement(name = "idtroubleTicket", namespace = "http://www.amx.com.mx/mexico/telcel/di/sds/gsa/dgpsti/esb/sipabservice", required = true)
+    @XmlElement(namespace = "", required = true)
     protected BigDecimal idtroubleTicket;
 
     /**

@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2024.11.24 a las 04:17:51 PM CST 
+// Generado el: 2025.02.13 a las 10:26:53 AM CST 
 //
 
 
@@ -11,7 +11,6 @@ package mexico.telcel.di.sds.gsa.dgpsti.esb.sipabservice.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -38,16 +37,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "BesCbsOperatorInfoType", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
-@XmlType(name = "BesCbsOperatorInfoType", namespace = "http://amx.com/mexico/telcel/esb/v1_2", propOrder = {
+@XmlType(name = "BesCbsOperatorInfoType", propOrder = {
     "operatorID",
     "channelID"
 })
 public class BesCbsOperatorInfoType {
 
-    @XmlElement(name = "operatorID", namespace = "http://amx.com/mexico/telcel/esb/v1_2", required = true)
+    @XmlElement(required = true)
     protected String operatorID;
-    @XmlElement(name = "channelID", namespace = "http://amx.com/mexico/telcel/esb/v1_2")
     protected String channelID;
 
     /**
